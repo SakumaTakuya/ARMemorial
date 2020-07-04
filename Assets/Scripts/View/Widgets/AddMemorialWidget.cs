@@ -85,17 +85,20 @@ namespace GozaiNASU.AR.View
                                 new ImageFileFormField(
                                     title : "Thumbnail",
                                     lead : "Select thumbnail picture",
+                                    initialValue : _data.Sample,
                                     onSaved : file => _data.Sample = file
                                 ),
                                 new FileFormFiled(
                                     "Data",
                                     "Select data file",
                                     "xml",
+                                    initialValue : _data.ModelData,
                                     onSaved : file => _data.ModelData = file
                                 ),
                                 new ImageFileFormSetField(
                                     title : "Pictures",
                                     lead : "Select associated picture",
+                                    initialValue : _data.Pictures,
                                     onSaved : files => _data.Pictures = files
                                 )
                             }
@@ -109,6 +112,7 @@ namespace GozaiNASU.AR.View
                             onPressed : () => {
                                 if (!_stateKey.currentState.validate()) return;
                                 _stateKey.currentState.save();
+                                
                                 Navigator.of(context).pop();
                             },
                             child : new Text("Submit")
@@ -348,7 +352,7 @@ namespace GozaiNASU.AR.View
                                         )
                                     ),
                                     child : new Text(
-                                        data : state.value,
+                                        data : state.value ?? "",
                                         overflow : TextOverflow.ellipsis,
                                         maxLines : 1
                                     )
@@ -377,6 +381,4 @@ namespace GozaiNASU.AR.View
             }
         ){}
     }
-
-
 }

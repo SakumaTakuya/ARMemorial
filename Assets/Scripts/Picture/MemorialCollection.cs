@@ -16,7 +16,7 @@ namespace GozaiNASU.AR.Data
 
         public MemorialData Create()
         {
-            var data = new MemorialData();
+            var data = ScriptableObject.CreateInstance("MemorialData") as MemorialData;
 
             _dataSet.Add(data);
             return data;
