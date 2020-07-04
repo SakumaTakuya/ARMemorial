@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GozaiNASU.AR.View
+namespace GozaiNASU.AR.Data
 {
     [CreateAssetMenu]
     public class MemorialData : ScriptableObject
     {
         public string Sample;
-        public string[] Pictures;
+        public string ModelData;
+        public List<string> Pictures;
+
+        public DataType DataType;
+    }
+
+    public enum DataType
+    {
+        Asset = 0,
+        File
     }
 }
 

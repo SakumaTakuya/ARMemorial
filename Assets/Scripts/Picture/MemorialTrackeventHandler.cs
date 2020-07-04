@@ -33,7 +33,8 @@ namespace GozaiNASU.AR.Picture
         public void Initialize(CancellationToken token)
         {
             var items = _urls
-                .Select(url => new ItemData(url, token))
+                .Select(url => new ItemDataResource(url, token))
+                .Cast<IPictureItemData>()
                 .ToList();
             _scrollView.UpdateData(items);
         }

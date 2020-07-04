@@ -4,7 +4,7 @@ using FancyScrollView;
 
 namespace GozaiNASU.AR.Picture.UI
 {
-    class ScrollView : FancyScrollView<ItemData>
+    class ScrollView : FancyScrollView<IPictureItemData>
     {
         [SerializeField] Scroller _scroller = default;
         [SerializeField] GameObject _cellPrefab = default;
@@ -17,7 +17,7 @@ namespace GozaiNASU.AR.Picture.UI
             _scroller.OnValueChanged(UpdatePosition);
         }
 
-        public void UpdateData(IList<ItemData> items)
+        public void UpdateData(IList<IPictureItemData> items)
         {
             UpdateContents(items);
             _scroller.SetTotalCount(items.Count);

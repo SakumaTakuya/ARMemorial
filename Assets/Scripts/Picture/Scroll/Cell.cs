@@ -9,7 +9,7 @@ using Cysharp.Threading.Tasks;
 
 namespace GozaiNASU.AR.Picture.UI
 {
-    class Cell : FancyCell<ItemData>
+    class Cell : FancyCell<IPictureItemData>
     {
         readonly EasingFunction alphaEasing = Easing.Get(Ease.OutQuint);
 
@@ -21,45 +21,17 @@ namespace GozaiNASU.AR.Picture.UI
         public override sealed bool IsVisible => base.IsVisible;
         public override sealed void SetVisible(bool visible) => base.SetVisible(visible);
 
-        public override void UpdateContent(ItemData itemData)
+        public override void UpdateContent(IPictureItemData itemData)
         {
-            _image.texture = null;
-            
-            LoadTexture(itemData.Url, itemData.Token).Forget();
-
+            _image.texture = null;            
+            LoadTextureAsync(itemData).Forget();
             UpdateSibling();
         }
 
-        async UniTask LoadTexture(string url, CancellationToken token)
+        async UniTask LoadTextureAsync(IPictureItemData data)
         {
-            const int timeOut = 3;
-
-            var (isTimeout, (isCanceled, result)) = await UnityWebRequestTexture
-                .GetTexture(url)
-                .SendWebRequest()
-                .WithCancellation(token)
-                .SuppressCancellationThrow()
-                .TimeoutWithoutException(System.TimeSpan.FromSeconds(timeOut));
-
-            if (isTimeout || isCanceled || result == null)
-            {
-                Debug.LogWarningFormat(
-                    "[Error] is timeout: {0}, is canceled:{1}", 
-                    isTimeout, isCanceled);
-                _image.texture = _defaultTexture;
-                return;
-            }
-
-            if (result.isNetworkError)
-            {
-                Debug.LogErrorFormat(
-                    "[Error] network error: {0}", 
-                    result.error);
-                _image.texture = _defaultTexture;
-                return;
-            }
-
-            _image.texture = ((DownloadHandlerTexture) result.downloadHandler).texture;
+            var ret = await data.LoadTextureAsync();
+            _image.texture = ret ?? _defaultTexture;
         }
 
         ///<summary>

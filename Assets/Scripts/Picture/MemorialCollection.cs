@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using GozaiNASU.AR.Picture;
 
-
-namespace GozaiNASU.AR.Picture
+namespace GozaiNASU.AR.Data
 {
     public class MemorialCollection : MonoBehaviour
     {
         CancellationTokenSource _cancellationSource;
         [SerializeField] List<MemorialTrackeventHandler> _targets = default;
+        [SerializeField] List<MemorialData> _dataSet = new List<MemorialData>();
+        public List<MemorialData> DataSet => _dataSet;
 
+        public MemorialData Create()
+        {
+            var data = new MemorialData();
+
+            _dataSet.Add(data);
+            return data;
+        }
 
         public void Activate()
         {

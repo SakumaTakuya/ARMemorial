@@ -10,6 +10,7 @@ using Unity.UIWidgets.rendering;
 using Unity.UIWidgets.painting;
 using Unity.UIWidgets.ui;
 using Unity.UIWidgets.widgets;
+using GozaiNASU.AR.Data;
 
 using Color = Unity.UIWidgets.ui.Color;
 using Image = Unity.UIWidgets.widgets.Image;
@@ -19,16 +20,31 @@ namespace GozaiNASU.AR.View
 {
     public class AlbumWidget : WidgetBehaviour
     {
-        [SerializeField] MemorialData[] _dataset = default;
+        [SerializeField] AddMemorialWidget _addMemorial = default;
+        [SerializeField] AddMemorialWidget _editMemorial = default;
+        [SerializeField] MemorialCollection _collection = default;
 
 
-        public override Widget Build(BuildContext context = null) =>
-            new Scaffold(
+
+        public override Widget Build(BuildContext context = null)
+        {
+            var dataset = _collection.DataSet;
+            return new Scaffold(
                 appBar : new AppBar(
-                    leading : new IconButton(icon : new Icon(Icons.menu)),
+                    // leading : new IconButton(icon : new Icon(Icons.menu)),
                     title : new Text(Configuration.Instance.AppName),
                     actions : new List<Widget>{
-                        new IconButton(icon : new Icon(Icons.add))
+                        new IconButton(
+                            icon : new Icon(Icons.add),
+                            onPressed : () => Navigator
+                                                .of(context)
+                                                .push(
+                                                    new MaterialPageRoute(
+                                                        c => _addMemorial.Build(c)
+                                                    )
+                                                )
+
+                        )
                     }
                 ),
                 body : new Container(
@@ -38,10 +54,15 @@ namespace GozaiNASU.AR.View
                                 floating : true,
                                 snap : true,
                                 title : new Text(
-                                    "Memorial", 
-                                    style : Theme.of(context).primaryTextTheme.headline
+                                    "Album", 
+                                    style : Theme
+                                                .of(context)
+                                                .primaryTextTheme
+                                                .headline
                                 ),
-                                backgroundColor : Theme.of(context).secondaryHeaderColor
+                                backgroundColor : Theme
+                                                    .of(context)
+                                                    .secondaryHeaderColor
                             ),
                             new SliverGrid(
                                 gridDelegate : new SliverGridDelegateWithFixedCrossAxisCount(
@@ -57,23 +78,28 @@ namespace GozaiNASU.AR.View
                                                                         .of(context)
                                                                         .push(
                                                                         new  MaterialPageRoute(
-                                                                                c => new TextEditWidget(_dataset[id])
+                                                                                c => {
+                                                                                    _editMemorial.Data = dataset[id];
+                                                                                    return _editMemorial.Build(c);
+                                                                                }
                                                                             )),
                                                     padding : EdgeInsets.all(0f),
-                                                    child : Image.asset(_dataset[id].Sample),
+                                                    child : dataset[id].DataType == DataType.Asset ? 
+                                                                Image.asset(dataset[id].Sample) :
+                                                                Image.file(dataset[id].Sample),
                                                     splashColor : Theme.of(cont).splashColor
                                                 )
-                                            )
-                                            
+                                            ) 
                                         )
                                     ),
-                                    childCount : _dataset.Length
+                                    childCount : dataset.Count
                                 )
                             )
                         }
                     )
                 )
             );
+        }
     }
 
     public class TextEditWidget : StatelessWidget

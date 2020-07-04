@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   Sample: products/backpack
-  Pictures: []
+  ModelData: Vuforia/AR
+  Pictures:
+  - products/backpack
+  - products/backpack
+  DataType: 0

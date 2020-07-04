@@ -12,7 +12,7 @@ using Unity.UIWidgets.widgets;
 using Vuforia.UnityCompiled;
 using Vuforia;
 
-using GozaiNASU.AR.Picture;
+using GozaiNASU.AR.Data;
 
 using Color = Unity.UIWidgets.ui.Color;
 using Image = UnityEngine.UI.Image;
