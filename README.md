@@ -13,6 +13,7 @@
 ## Vuforiaモデルの追加
 1. [こんな感じで](https://www.atmarkit.co.jp/ait/articles/1702/14/news023_2.html)プロジェクトにモデルを追加
 2. `ForBuild`シーン上の`ARCamera/ObjectTarget`の`Object Target Behaviour`の設定を変更
+    ![](https://i.imgur.com/LQGsKKW.png)
 3. とりあえずエディタ上で動作確認
 
 ## ビルド
