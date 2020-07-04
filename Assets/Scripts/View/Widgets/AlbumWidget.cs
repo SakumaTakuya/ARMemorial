@@ -40,7 +40,11 @@ namespace GozaiNASU.AR.View
                                                 .of(context)
                                                 .push(
                                                     new MaterialPageRoute(
-                                                        c => _addMemorial.Build(c)
+                                                        c => {
+                                                            _addMemorial.Data = null;
+                                                            return _addMemorial.Build(c);
+                                                        }
+                                                        
                                                     )
                                                 )
 
@@ -84,9 +88,11 @@ namespace GozaiNASU.AR.View
                                                                                 }
                                                                             )),
                                                     padding : EdgeInsets.all(0f),
-                                                    child : dataset[id].DataType == DataType.Asset ? 
-                                                                Image.asset(dataset[id].Sample) :
-                                                                Image.file(dataset[id].Sample),
+                                                    child : string.IsNullOrEmpty(dataset[id].Sample) ?
+                                                                null :
+                                                                dataset[id].DataType == DataType.Asset ? 
+                                                                    Image.asset(dataset[id].Sample) :
+                                                                    Image.file(dataset[id].Sample),
                                                     splashColor : Theme.of(cont).splashColor
                                                 )
                                             ) 

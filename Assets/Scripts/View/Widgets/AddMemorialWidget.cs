@@ -112,7 +112,7 @@ namespace GozaiNASU.AR.View
                             onPressed : () => {
                                 if (!_stateKey.currentState.validate()) return;
                                 _stateKey.currentState.save();
-                                
+                                _data.DataType = DataType.File;
                                 Navigator.of(context).pop();
                             },
                             child : new Text("Submit")

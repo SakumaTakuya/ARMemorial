@@ -1678,5 +1678,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targets:
   - {fileID: 727268310}
-  _dataSet:
-  - {fileID: 11400000, guid: e00c7ffbef04aea4b872b414f3a73e46, type: 2}
+  _dataSet: []
